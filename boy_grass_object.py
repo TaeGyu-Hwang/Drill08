@@ -25,6 +25,38 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame*100, 0, 100, 100, self.x, self.y)
 
+class Ball1:
+    def __init__(self):
+        self.hx, self.hy = random.randint(50, 750), 599
+        self.frame = random.randint(0, 7)
+        self.image = load_image('ball21x21.png')
+
+    def update(self):
+        if self.hy > 0:  # 바닥에 닿지 않았다면
+            self.frame = (self.frame + 1) % 8
+            self.hy -= 5
+        else:
+            self.hy = 0  # 바닥에 닿으면 높이를 0으로 설정
+
+    def draw(self):
+        self.image.clip_draw(self.frame * 100, 0, 100, 100, self.hx, self.hy)
+
+class Ball2:
+    def __init__(self):
+        self.hx, self.hy = random.randint(50, 750), 599
+        self.frame = random.randint(0, 7)
+        self.image = load_image('ball41x41.png')
+
+    def update(self):
+        if self.hy > 0:  # 바닥에 닿지 않았다면
+            self.frame = (self.frame + 1) % 8
+            self.hy -= 5
+        else:
+            self.hy = 0  # 바닥에 닿으면 높이를 0으로 설정
+
+    def draw(self):
+        self.image.clip_draw(self.frame * 100, 0, 100, 100, self.hx, self.hy)
+
 
 def handle_events():
     global running
@@ -42,6 +74,8 @@ def reset_world():
     global grass
     global team
     global world
+    global ball1
+    global ball2
 
     running = True
     world = []
@@ -51,6 +85,11 @@ def reset_world():
 
     team = [Boy() for i in range(11)]
     world += team
+
+    ball1 = [Ball1() for b in range(20)]
+    world += ball1
+    ball2 = [Ball2() for b in range(20)]
+    world += ball2
 
 
 # initialization code
